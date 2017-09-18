@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Listagem de Bairros</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h1>Listagem de Bairros</h1>
+        <h:form>
+            <p:dataTable var="b" value="#{bairroBean.bairros}">
+                <p:column headerText="Nome">
+                    <h:outputText value="#{b.nome}" />
+                </p:column>
+
+                <p:column headerText="Operações">
+                    <p:commandButton
+                        icon="ui-icon-trash" 
+                        title="Excluir bairro" 
+                        ajax="false"
+                        action="#{bairroBean.excluir()}"
+                        >
+                        <f:setPropertyActionListener 
+                            value="#{b}" 
+                            target="#{bairroBean.bairro}" />
+                    </p:commandButton>
+
+                    <p:commandButton
+                        icon="ui-icon-pencil" 
+                        title="Editar bairro" 
+                        ajax="false"
+                        action="cadastro.xhtml"
+                        >
+                        <f:setPropertyActionListener 
+                            value="#{b}" 
+                            target="#{bairroBean.bairro}" />
+                    </p:commandButton>
+                </p:column>
+                <f:facet name="footer">
+                    <p:button outcome="cadastro.xhtml" value="Novo Bairro" />
+                    <p:button outcome="/inicio.xhtml" value="Início" />
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>

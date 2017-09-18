@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro de Bairro</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h1>Cadastro de Bairro</h1>
+        <h:form id="formCadastroBairro">
+            <p:growl id="growl" showDetail="true" showSummary="true" />
+            <h:inputHidden value="#{bairroBean.bairro.id}"/>
+            <p:panelGrid columns="2">
+                <h:outputLabel  value="Nome" />
+                <p:inputText value="#{bairroBean.bairro.nome}"/>
+            </p:panelGrid>
+            <br />
+            <p:commandButton value="Salvar" ajax="false" action="#{bairroBean.salvar()}" />
+            <p:button outcome="listar.xhtml" value="Cancelar" />
+            <p:button outcome="/inicio.xhtml" value="Início" />
+        </h:form>
+    </h:body>
+</html>
