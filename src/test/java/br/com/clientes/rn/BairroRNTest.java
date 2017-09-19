@@ -6,7 +6,8 @@
 package br.com.clientes.rn;
 
 import br.com.clientes.entidades.Bairro;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *
@@ -14,7 +15,6 @@ import org.junit.*;
  */
 public class BairroRNTest {
 
-    //ENTIDADES
     //RN
     private final BairroRN BAIRRO_RN = new BairroRN();
 
@@ -24,10 +24,7 @@ public class BairroRNTest {
 
     @Test
     public void deveCadastrarUmBairro() {
-        Bairro bairro = new Bairro();
-        bairro.setId(0);
-        bairro.setNome("Pedreira");
-        
+        Bairro bairro = new Bairro(null, "Cremação");
         Assert.assertEquals(true, BAIRRO_RN.salvar(bairro));
     }
 }
