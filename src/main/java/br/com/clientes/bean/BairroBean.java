@@ -12,7 +12,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-
 /**
  *
  * @author SHD
@@ -37,8 +36,8 @@ public class BairroBean {
     public void setBairro(Bairro bairro) {
         this.bairro = bairro;
     }
-    
-    public List<Bairro> getBairros(){
+
+    public List<Bairro> getBairros() {
         return BAIRRO_RN.obterTodos();
     }
 
@@ -53,6 +52,10 @@ public class BairroBean {
     }
 
     public void excluir() {
-
+        if (BAIRRO_RN.excluir(bairro)) {
+            UtilBean.criarMensagemDeAviso("Sucesso", "Bairro removido");
+        } else {
+            UtilBean.criarMensagemDeErro("Erro", "Bairro não foi removido");
+        }
     }
 }
