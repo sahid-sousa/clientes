@@ -5,6 +5,8 @@
  */
 package br.com.clientes.rn;
 
+import br.com.clientes.entidades.Bairro;
+import br.com.clientes.entidades.Cliente;
 import javax.persistence.EntityManager;
 
 /**
@@ -13,13 +15,16 @@ import javax.persistence.EntityManager;
  */
 public class ClienteRNTest {
 
+    //ENTIDADES    
+    private Bairro bairro;
+    private Cliente cliente;
     //RN
     private final ClienteRN CLIENTE_RN = new ClienteRN();
+    private final BairroRN BAIRRO_RN = new BairroRN();
 
     private static EntityManager em;
 
     public ClienteRNTest() {
-
     }
 
     

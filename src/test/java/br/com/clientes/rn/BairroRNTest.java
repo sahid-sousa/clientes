@@ -6,11 +6,10 @@
 package br.com.clientes.rn;
 
 import br.com.clientes.dao.FabricaEntityManager;
+import br.com.clientes.entidades.Bairro;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +23,9 @@ import org.junit.Test;
  */
 public class BairroRNTest {
 
-    //RN
+//Entidades
+    private Bairro bairro;  
+//RN
     private final BairroRN BAIRRO_RN = new BairroRN();
     private static EntityManager em;
 
@@ -34,6 +35,7 @@ public class BairroRNTest {
 
     @AfterClass
     public static void tearDownClass() {
+       em.close();
     }
 
     @BeforeClass
@@ -44,38 +46,13 @@ public class BairroRNTest {
 
     @Before
     public void setUp() {
-        EntityTransaction transaction = em.getTransaction();
-        String sql = "INSERT INTO bairro VALUES (null, 'Panorama')";
-        try {
-            transaction.begin();
-            Query q = em.createNativeQuery(sql);
-            q.executeUpdate();
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-            transaction.rollback();
-        }
+        this.bairro = new Bairro(null,"Chicória");
+        assertTrue(BAIRRO_RN.salvar(this.bairro));
     }
 
     @After
     public void tearDown() {
-        EntityTransaction transaction = em.getTransaction();
-        String sql = "SELECT id FROM bairro WHERE nome = 'Jurunas'";
-
-        try {
-            transaction.begin();
-            Query q = em.createNativeQuery(sql);
-            List resultado = q.getResultList();
-            if (resultado != null && !resultado.isEmpty()) {
-                int id = (Integer) resultado.get(0);
-                q = em.createNativeQuery("DELETE FROM bairro WHERE id=" + id);
-                q.executeUpdate();
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace(System.err);
-            transaction.rollback();
-        }
+         assertTrue(BAIRRO_RN.excluir(this.bairro));
     }
 
     @Test
@@ -83,5 +60,18 @@ public class BairroRNTest {
         assertNotNull(em);
     }
     
+    @Test
+    public void obterTest(){
+        Bairro bairro = null;
+        bairro = BAIRRO_RN.obter(this.bairro.getId());
+        assertNotNull(bairro);
+    }
+    
+    @Test
+    public void obterTodosTest(){
+        List<Bairro> bairros;
+        bairros = BAIRRO_RN.obterTodos();
+        assertNotNull(bairros);
+    }
     
 }
