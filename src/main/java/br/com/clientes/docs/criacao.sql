@@ -1,42 +1,121 @@
--- MySQL Workbench Synchronization
--- Generated: 2017-09-20 01:24
--- Model: New Model
--- Version: 1.0
--- Project: Name of the project
--- Author: SHD
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-ALTER TABLE `rentcar`.`aluguel` 
-DROP FOREIGN KEY `fk_aluguel_carro1`,
-DROP FOREIGN KEY `fk_aluguel_cliente1`;
+-- -----------------------------------------------------
+-- Schema rentcar
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `rentcar` ;
 
-ALTER TABLE `rentcar`.`aluguel` 
-DROP COLUMN `cliente`,
-DROP COLUMN `carro`,
-CHANGE COLUMN `retirada` `retirada` DATETIME NULL DEFAULT NULL ,
-CHANGE COLUMN `devolucao` `devolucao` DATETIME NULL DEFAULT NULL ,
-CHANGE COLUMN `valor_total` `valor_total` DECIMAL(10,2) NULL DEFAULT NULL ,
-ADD COLUMN `carro` INT(11) NOT NULL AFTER `valor_total`,
-ADD COLUMN `cliente` INT(11) NOT NULL AFTER `carro`,
-ADD INDEX `fk_aluguel_carro1_idx` (`carro` ASC),
-ADD INDEX `fk_aluguel_cliente1_idx` (`cliente` ASC),
-DROP INDEX `fk_aluguel_cliente1_idx` ,
-DROP INDEX `fk_aluguel_carro1_idx` ;
+-- -----------------------------------------------------
+-- Schema rentcar
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `rentcar` DEFAULT CHARACTER SET utf8 ;
+USE `rentcar` ;
 
-ALTER TABLE `rentcar`.`aluguel` 
-ADD CONSTRAINT `fk_aluguel_carro1`
-  FOREIGN KEY (`carro`)
-  REFERENCES `rentcar`.`carro` (`id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_aluguel_cliente1`
-  FOREIGN KEY (`cliente`)
-  REFERENCES `rentcar`.`cliente` (`id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+-- -----------------------------------------------------
+-- Table `rentcar`.`bairro`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rentcar`.`bairro` ;
+
+CREATE TABLE IF NOT EXISTS `rentcar`.`bairro` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 10
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `rentcar`.`cliente`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rentcar`.`cliente` ;
+
+CREATE TABLE IF NOT EXISTS `rentcar`.`cliente` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `telefone` VARCHAR(11) NOT NULL,
+  `endereco` VARCHAR(150) NOT NULL,
+  `cidade` VARCHAR(100) NOT NULL,
+  `bairro` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_cliente_bairro_idx` (`bairro` ASC),
+  CONSTRAINT `fk_cliente_bairro`
+    FOREIGN KEY (`bairro`)
+    REFERENCES `rentcar`.`bairro` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `rentcar`.`locadora`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rentcar`.`locadora` ;
+
+CREATE TABLE IF NOT EXISTS `rentcar`.`locadora` (
+  `id` INT(11) NOT NULL,
+  `nome` VARCHAR(45) NULL,
+  `endereco` VARCHAR(45) NULL,
+  `cidade` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rentcar`.`carro`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rentcar`.`carro` ;
+
+CREATE TABLE IF NOT EXISTS `rentcar`.`carro` (
+  `id` INT(11) NOT NULL,
+  `marca` VARCHAR(100) NULL,
+  `modelo` VARCHAR(45) NOT NULL,
+  `placa` VARCHAR(10) NOT NULL,
+  `chassi` VARCHAR(45) NULL,
+  `ano` INT(4) NOT NULL,
+  `locadora` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_carro_locadora1_idx` (`locadora` ASC),
+  CONSTRAINT `fk_carro_locadora1`
+    FOREIGN KEY (`locadora`)
+    REFERENCES `rentcar`.`locadora` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rentcar`.`aluguel`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `rentcar`.`aluguel` ;
+
+CREATE TABLE IF NOT EXISTS `rentcar`.`aluguel` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `carro` INT(11) NOT NULL,
+  `cliente` INT(11) NOT NULL,
+  `retirada` DATETIME NOT NULL,
+  `devolucao` DATETIME NOT NULL,
+  `valor_total` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_aluguel_carro1_idx` (`carro` ASC),
+  INDEX `fk_aluguel_cliente1_idx` (`cliente` ASC),
+  CONSTRAINT `fk_aluguel_carro1`
+    FOREIGN KEY (`carro`)
+    REFERENCES `rentcar`.`carro` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_aluguel_cliente1`
+    FOREIGN KEY (`cliente`)
+    REFERENCES `rentcar`.`cliente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
