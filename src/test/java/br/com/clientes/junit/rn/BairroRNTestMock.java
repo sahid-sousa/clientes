@@ -8,6 +8,7 @@ package br.com.clientes.junit.rn;
 import br.com.clientes.dao.GenericDAO;
 import br.com.clientes.entidades.Bairro;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
@@ -36,5 +37,7 @@ public class BairroRNTestMock {
     @Test
     public void salvarBairroMockTest(){
         when(genericDAOFalso.criar(bairro)).thenReturn(true);
+        
+        Assert.assertEquals(true,genericDAOFalso.criar(bairro));
     }
 }

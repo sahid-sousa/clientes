@@ -40,7 +40,7 @@ public class CadastrarBairroWebTest {
 
         WebElement titulo = driver.findElement(By.name("formCadastroBairro:district"));
         WebElement button = driver.findElement(By.name("formCadastroBairro:enviar"));
-        titulo.sendKeys("Terra Firme");
+        titulo.sendKeys("Guanabara");
         button.click();
 
         boolean existeMensagem = driver.getPageSource().contains("Erro de validação");
@@ -49,7 +49,5 @@ public class CadastrarBairroWebTest {
 
     }
 
-//    public static void main(String[] args) {
-//        CadastrarBairroWebTest.formCadastrarUmBairroTest();
-//    }
+
 }
