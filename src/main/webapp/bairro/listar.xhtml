@@ -13,9 +13,11 @@ and open the template in the editor.
         <title>Listagem de Bairros</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
+    <p:growl id="growl" showDetail="true" showSummary="true" />
     <h:body>
         <h1>Listagem de Bairros</h1>
         <h:form>
+
             <p:dataTable var="b" value="#{bairroBean.bairros}">
                 <p:column headerText="Nome">
                     <h:outputText value="#{b.nome}" />

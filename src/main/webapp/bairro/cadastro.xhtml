@@ -20,10 +20,10 @@ and open the template in the editor.
             <h:inputHidden value="#{bairroBean.bairro.id}"/>
             <p:panelGrid columns="2">
                 <h:outputLabel  value="Nome" />
-                <p:inputText value="#{bairroBean.bairro.nome}"/>
+                <h:inputText value="#{bairroBean.bairro.nome}" required="true" id="district"/>
             </p:panelGrid>
             <br />
-            <p:commandButton value="Salvar" ajax="false" action="#{bairroBean.salvar()}" />
+            <p:commandButton value="Salvar" ajax="false" action="#{bairroBean.salvar()}" id="enviar"/>
             <p:button outcome="listar.xhtml" value="Cancelar" />
             <p:button outcome="/inicio.xhtml" value="Início" />
         </h:form>

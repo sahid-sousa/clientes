@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.clientes.rn;
+package br.com.clientes.junit.rn;
 
 import br.com.clientes.dao.FabricaEntityManager;
 import br.com.clientes.entidades.Bairro;
+import br.com.clientes.rn.BairroRN;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
